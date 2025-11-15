@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqow47bch5ocs"]
+
+[ext_resource type="PackedScene" uid="uid://crwftpmqaqbq5" path="res://Player/FPS.tscn" id="2_0xm2m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_0xm2m"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0xm2m"]
+size = Vector3(5, 1.9670868, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_7dm0k"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.6459108, 0.7634129, 0, -0.7634129, 0.6459108, 0, 9.697276, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.08489528, 0.99639004, 0, -0.99639004, 0.08489528, 0, 6.9069147, 0)
+shadow_enabled = true
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("2_0xm2m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.690343, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(15.190001, 0, 0, 0, 1, 0, 0, 0, 27.27, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_ig7tw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00048907986, -0.005743861, -0.00032238528)
+mesh = SubResource("BoxMesh_0xm2m")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1.044641, 0, 0, 0, 1.7300324, 0, 0, 0, 1, 0, 2.191505, -6.3215547)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(0.9999988, 0, 0, 0, 0.9999616, 0, 0, 0, 0.999972, 0, 0, 0)
+shape = SubResource("BoxShape3D_0xm2m")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(4.8043118, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_7dm0k")
+skeleton = NodePath("../..")

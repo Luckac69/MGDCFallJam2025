@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://crwftpmqaqbq5"]
+
+[ext_resource type="Script" uid="uid://ct0142ymfm8i3" path="res://Player/fps.gd" id="1_gxugy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c6sdm"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_iml7b"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_gxugy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_c6sdm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_iml7b")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.91037333, 0.4137877, 0, -0.4137877, 0.91037333, 0, 0.7944704, 0)
+
+[node name="CameraController" type="SpringArm3D" parent="CameraPivot"]
+unique_name_in_owner = true
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/CameraController"]
+current = true
