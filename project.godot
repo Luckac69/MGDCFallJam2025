@@ -15,6 +15,10 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Heightmap="*res://heightmap/Heightmap.gd"
+
 [input]
 
 move_forwards={
@@ -71,4 +75,19 @@ camera_right={
 "deadzone": 0.2,
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":2,"axis_value":1.0,"script":null)
 ]
+}
+
+[shader_globals]
+
+heightmap={
+"type": "sampler2D",
+"value": "res://heightmap/heightmap.png"
+}
+normalmap={
+"type": "sampler2D",
+"value": "res://heightmap/normalmap.png"
+}
+amplitude={
+"type": "float",
+"value": 8.0
 }

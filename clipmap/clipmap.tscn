@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5ep06m54a4kl"]
+
+[ext_resource type="Shader" uid="uid://bc00crdpdtabu" path="res://heightmap/clipmap.gdshader" id="1_3ufxf"]
+[ext_resource type="Script" uid="uid://dybc17tshr36l" path="res://clipmap/clipmap.gd" id="1_tuw53"]
+[ext_resource type="Texture2D" uid="uid://ct74nutshtuc6" path="res://heightmap/heightmap.png" id="3_tuw53"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
+render_priority = 0
+shader = ExtResource("1_3ufxf")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ufxf"]
+shading_mode = 2
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(0.41960785, 0.7411765, 0.38431373, 1)
+albedo_texture = ExtResource("3_tuw53")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_3ufxf"]
+material = SubResource("StandardMaterial3D_3ufxf")
+size = Vector2(256, 256)
+subdivide_width = 255
+subdivide_depth = 255
+
+[node name="Clipmap" type="Node3D"]
+script = ExtResource("1_tuw53")
+
+[node name="Terrain" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_272bh")
+mesh = SubResource("PlaneMesh_3ufxf")
