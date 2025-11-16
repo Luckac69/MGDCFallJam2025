@@ -11,11 +11,6 @@ var camera_input_direction := Vector2.ZERO
 @onready var camera_pivot: Node3D = $CameraPivot
 @onready var camera_controller: SpringArm3D = %"CameraController"
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("left_click"):
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	if event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _physics_process(delta: float) -> void:
 
@@ -53,7 +48,7 @@ func handle_Camera(delta: float) -> void:
 
 	#main
 	camera_pivot.rotation.x -= camera_input_direction.y * delta
-	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI /6.0, PI/3.0)
+	camera_pivot.rotation.x = clamp(camera_pivot.rotation.x, -PI /3.0, PI/6.0)
 	camera_pivot.rotation.y -= camera_input_direction.x * delta
 
 	camera_input_direction = Vector2.ZERO
