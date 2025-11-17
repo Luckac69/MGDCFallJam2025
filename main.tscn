@@ -1,13 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqow47bch5ocs"]
+[gd_scene load_steps=10 format=3 uid="uid://cqow47bch5ocs"]
 
 [ext_resource type="Script" uid="uid://bcw1w7crj6yh0" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://crwftpmqaqbq5" path="res://Player/FPS.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bei8uws4va835" path="res://collisionmap/collisionmap.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c5ep06m54a4kl" path="res://clipmap/clipmap.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bols5cql8hppn" path="res://Cart/CartTrack.gd" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bc5gfc2ebp67c" path="res://Cart/Cart.tscn" id="6_7mycd"]
 
 [sub_resource type="Environment" id="Environment_lquwl"]
 background_mode = 1
 background_color = Color(0.47843137, 0.65882355, 0.85490197, 0.105882354)
+
+[sub_resource type="Curve3D" id="Curve3D_1bvp3"]
+_data = {
+"points": PackedVector3Array(-45.76581, 0, -1.3002357, 45.76581, 0, 1.3002357, -10.22303, 3.0271702, 18.905273, -25.666473, 0, 1.8088074, 25.666473, 0, -1.8088074, 216.05167, 0, 22.748484, -49.8179, 0, 2.5138283, 49.8179, 0, -2.5138283, 274.9933, 0, 44.07036, -2.477295, 0, -25.182781, 2.477295, 0, 25.182781, 353.86493, 0, 1.3044226, -6.041809, 0, 21.439653, 6.041809, 0, -21.439653, 388.2179, 0, -28.842068, -14.751526, 0, 18.757841, 14.751526, 0, -18.757841, 461.93805, 0, -39.652977, 0.48883057, 0, 22.210518, -0.48883057, 0, -22.210518, 482.2694, 0, -68.04675, 40.925415, 0, 10.664574, -40.925415, 0, -10.664574, 488.9297, 0, -110.81269, -5.7025757, 0, 10.782898, 5.7025757, 0, -10.782898, 481.91888, 0, -158.83673, -16.2182, 0, 15.813278, 16.2182, 0, -15.813278, 489.98132, 0, -190.03482, -11.320618, 0, 7.053116, 11.320618, 0, -7.053116, 544.8561, 0, -217.86385, -11.233948, 0, 22.077759, 11.233948, 0, -22.077759, 566.61285, 0, -266.623, 6.6207886, 0, 10.169189, -6.6207886, 0, -10.169189, 561.0042, 0, -286.6038, 1.8684082, 0, 30.428192, -1.8684082, 0, -30.428192, 543.32574, 0, -320.8297, 1.2266235, 0, 21.261261, -1.2266235, 0, -21.261261, 557.81213, 0, -353.71112, -1.635437, 0, 27.803192, 1.635437, 0, -27.803192, 539.0041, 0, -389.28287, -6.9507446, 0, 13.083862, 6.9507446, 0, -13.083862, 562.3097, 0, -417.90378),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 17
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_7mycd"]
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_ig7tw")
@@ -20,7 +31,7 @@ transform = Transform3D(1, 0, 0, 0, 0.8641956, 0.50315565, 0, -0.50315565, 0.864
 shadow_enabled = true
 
 [node name="HeroChar1" parent="." instance=ExtResource("2_0xm2m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8543718, 4.851433, 0.5332761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.584297, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_lquwl")
@@ -28,9 +39,31 @@ environment = SubResource("Environment_lquwl")
 [node name="Terrain" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.690343, 0)
 
-[node name="Collisionmap" parent="Terrain" node_paths=PackedStringArray("physics_body") instance=ExtResource("3_1bvp3")]
+[node name="CollisionmapHero" parent="Terrain" node_paths=PackedStringArray("physics_body") instance=ExtResource("3_1bvp3")]
 physics_body = NodePath("../../HeroChar1")
+
+[node name="CollisionmapCart" parent="Terrain" node_paths=PackedStringArray("physics_body") instance=ExtResource("3_1bvp3")]
+physics_body = NodePath("../../Cart")
 
 [node name="Clipmap" parent="Terrain" node_paths=PackedStringArray("physics_body") instance=ExtResource("3_h2yge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.165, 0, 0)
-physics_body = NodePath("../../HeroChar1")
+physics_body = NodePath("../../Cart")
+
+[node name="CartPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_1bvp3")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="CartPath"]
+transform = Transform3D(-0.028397508, 0, -0.99955773, 0, 0.99996305, 0, 0.9995389, 0, -0.028398044, -10.22303, 3.0271702, 18.905273)
+script = ExtResource("5_lquwl")
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="CartPath/PathFollow3D"]
+remote_path = NodePath("../../../CartSpring")
+
+[node name="PathPoint" type="Node3D" parent="CartPath/PathFollow3D"]
+
+[node name="CartSpring" type="SpringArm3D" parent="."]
+transform = Transform3D(-0.028397508, 0, -0.99955773, 0, 0.99996305, 0, 0.9995389, 0, -0.028398044, -10.22303, 3.0271702, 18.905273)
+shape = SubResource("SeparationRayShape3D_7mycd")
+
+[node name="Cart" parent="." instance=ExtResource("6_7mycd")]
+transform = Transform3D(-0.028399149, 0, -0.99959666, 0, 1, 0, 0.99959666, 0, -0.028399149, -4.8219275, 10.04692, 5.761937)
